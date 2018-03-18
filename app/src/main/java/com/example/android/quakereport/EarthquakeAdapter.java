@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by hossam on 3/17/18.
