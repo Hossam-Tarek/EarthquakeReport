@@ -61,7 +61,8 @@ public final class QueryUtils {
                 earthquakes.add(new Earthquake(
                         jsonObject.optDouble("mag"),
                         jsonObject.optString("place"),
-                        jsonObject.optLong("time")));
+                        jsonObject.optLong("time"),
+                        jsonObject.optString("url")));
             }
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
