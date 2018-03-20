@@ -57,11 +57,11 @@ public final class QueryUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 jsonObject = jsonArray.getJSONObject(i);
                 jsonObject = jsonObject.optJSONObject("properties");
-                long timeInMilliseconds =  jsonObject.optLong("time");
 
                 earthquakes.add(new Earthquake(
-                        jsonObject.optString("mag"),
-                        jsonObject.optString("place"), timeInMilliseconds));
+                        jsonObject.optDouble("mag"),
+                        jsonObject.optString("place"),
+                        jsonObject.optLong("time")));
             }
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
