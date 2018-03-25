@@ -1,5 +1,6 @@
 package com.example.android.quakereport;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -35,16 +36,27 @@ public final class QueryUtils {
     private QueryUtils() {
     }
 
-    public static ArrayList<Earthquake> fetchEarthquakesData(String stringUrl) {
-        return extractEarthquakesFromJson(makeHttpRequest(createURL(stringUrl)));
+    public static ArrayList<Earthquake> fetchEarthquakesData(String requestUrl) {
+        URL url = createURL(requestUrl);
+
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        return extractFeatureFromJson(jsonResponse);
     }
 
     /**
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    private static ArrayList<Earthquake> extractEarthquakesFromJson(String jsonResponse) {
-
+    private static ArrayList<Earthquake> extractFeatureFromJson(String jsonResponse) {
+        if (TextUtils.isEmpty(jsonResponse)) {
+            return null;
+        }
         // Create an empty ArrayList that we can start adding earthquakes to
         ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
@@ -70,7 +82,7 @@ public final class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
         }
 
         // Return the list of earthquakes
@@ -102,7 +114,7 @@ public final class QueryUtils {
         return output.toString();
     }
 
-    private static String makeHttpRequest(URL url) {
+    private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
         if (url == null) {
             return jsonResponse;
@@ -131,11 +143,7 @@ public final class QueryUtils {
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Error closing input stream", e);
-                }
+                inputStream.close();
             }
         }
         return jsonResponse;
