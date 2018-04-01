@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -77,6 +78,9 @@ public class EarthquakeActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Earthquake>> loader, ArrayList<Earthquake> earthquakes) {
+        ProgressBar progressBar = findViewById(R.id.loading_spinner);
+        progressBar.setVisibility(View.GONE);
+
         emptyStateTextView.setText(R.string.no_earthquakes);
         adapter.clear();
 
