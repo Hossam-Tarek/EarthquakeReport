@@ -8,4 +8,11 @@
         android:key="@string/settings_min_magnitude_key"
         android:selectAllOnFocus="true"
         android:title="@string/settings_min_magnitude_lable"/>
+
+    <ListPreference
+        android:defaultValue="@string/settings_order_by_default"
+        android:entries="@array/settings_order_by_lables"
+        android:entryValues="@array/settings_order_be_values"
+        android:key="@string/settings_order_by_key"
+        android:title="@string/settings_order_by_label" />
 </PreferenceScreen>
